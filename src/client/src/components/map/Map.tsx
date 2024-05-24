@@ -39,9 +39,6 @@ function Map() {
           key={stationData.stationId}
         />
       ))}
-      <BaseMapMarker lngLat={OsloCenter} onClick={() => console.log("Test")}>
-        Hello
-      </BaseMapMarker>
     </MapContext.Provider>
   );
 }
