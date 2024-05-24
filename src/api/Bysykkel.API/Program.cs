@@ -1,12 +1,18 @@
+using AutoMapper;
+using Bysykkel.API;
+using Bysykkel.Application.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddHealthChecks();
+
+builder.Services.AddHttpClient();
+
+
 
 var CorsPolicyName = "ClientOrigins";
 
@@ -18,6 +24,16 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: CorsPolicyName, policy => policy.WithOrigins(ClientOrigin));
 });
+
+var mapperConfig = new MapperConfiguration(mc =>
+{
+    mc.AddProfile(new MappingProfile());
+});
+
+IMapper mapper = mapperConfig.CreateMapper();
+builder.Services.AddSingleton(mapper);
+
+builder.Services.AddScoped<IBysykkelService, BysykkelService>();
 
 var app = builder.Build();
 
