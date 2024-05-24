@@ -24,7 +24,9 @@
     "paths": {
       "@components/*": ["src/components/*"],
       "@assets/*": ["src/assets/*"],
-      "@config": ["src/config/index"]
+      "@config": ["src/config/index"],
+      "@api/*": ["src/api/*"],
+      "@customTypes/*": ["src/types/*"]
     },
     "baseUrl": "./"
   },
