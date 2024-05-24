@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Map as MapLibre } from "maplibre-gl";
 import { MapStyleUrl } from "@config";
 import { MapContext, MapContextValue, OsloCenter } from "./MapUtils";
+import classes from "./map.module.css";
 
 function Map() {
   const [mapContextRef, setMapContextRef] = useState<MapContextValue>(null);
@@ -25,8 +26,8 @@ function Map() {
   return (
     <MapContext.Provider value={mapContextRef}>
       <div
+        className={classes.mapContainer}
         key="map"
-        style={{ width: 500, height: 500 }}
         ref={mapContainer}
       ></div>
     </MapContext.Provider>

@@ -1,0 +1,11 @@
+.mapContainer {
+    width: 100lvw;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+    :global(.maplibregl-ctrl-bottom-right) {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+    }
+}
