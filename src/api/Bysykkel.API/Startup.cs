@@ -40,6 +40,18 @@ public class Startup
 
         services.AddScoped<IBysykkelService, BysykkelService>();
     }
+    public void AddHttpClients(IServiceCollection services)
+    {
+        services.AddHttpClient<IBysykkelService, BysykkelService>(client =>
+        {
+            var baseUrl = _configuration.GetValue<string>("Bysykkel:BaseUrl");
+            if(baseUrl == null) {
+                throw new Exception("Missing Bysykkel configuration");
+            }
+            client.BaseAddress = new Uri(_configuration.GetValue<string>("Bysykkel:BaseUrl"));
+            client.DefaultRequestHeaders.Add("Client-Identifier", _configuration.GetValue<string>("Bysykkel:ClientIdentifier"));
+        });
+    }
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
 

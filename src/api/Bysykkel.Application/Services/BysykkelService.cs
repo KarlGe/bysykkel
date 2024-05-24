@@ -10,8 +10,6 @@ public class BysykkelService : IBysykkelService
     public BysykkelService(HttpClient httpClient)
     {
         _httpClient = httpClient;
-        _httpClient.DefaultRequestHeaders.Add("Client-Identifier", "karlge-hobbykart");
-        _httpClient.BaseAddress = new Uri("https://gbfs.urbansharing.com/oslobysykkel.no/");
     }
 
     public async Task<IList<Station>> GetStationsAsync()
