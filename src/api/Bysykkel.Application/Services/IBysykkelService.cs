@@ -4,5 +4,5 @@ namespace Bysykkel.Application.Services;
 
 public interface IBysykkelService
 {
-    Task<IList<Station>> GetStationsAsync();
+    Task<IEnumerable<Station>> GetStationsAsync();
 }

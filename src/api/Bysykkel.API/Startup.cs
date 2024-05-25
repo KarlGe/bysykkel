@@ -16,7 +16,7 @@ public class Startup
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
         services.AddHealthChecks();
-
+        services.AddMemoryCache();
         services.AddHttpClient();
 
 
@@ -48,7 +48,7 @@ public class Startup
             if(baseUrl == null) {
                 throw new Exception("Missing Bysykkel configuration");
             }
-            client.BaseAddress = new Uri(_configuration.GetValue<string>("Bysykkel:BaseUrl"));
+            client.BaseAddress = new Uri(baseUrl);
             client.DefaultRequestHeaders.Add("Client-Identifier", _configuration.GetValue<string>("Bysykkel:ClientIdentifier"));
         });
     }
