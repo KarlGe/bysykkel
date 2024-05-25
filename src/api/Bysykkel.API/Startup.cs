@@ -45,7 +45,8 @@ public class Startup
         services.AddHttpClient<IBysykkelService, BysykkelService>(client =>
         {
             var baseUrl = _configuration.GetValue<string>("Bysykkel:BaseUrl");
-            if(baseUrl == null) {
+            if (baseUrl == null)
+            {
                 throw new Exception("Missing Bysykkel configuration");
             }
             client.BaseAddress = new Uri(baseUrl);
@@ -62,8 +63,8 @@ public class Startup
         {
             app.UseSwagger();
             app.UseSwaggerUI();
-            app.UseCors(CorsPolicyName);
         }
+        app.UseCors(CorsPolicyName);
 
         app.UseHttpsRedirection();
 
