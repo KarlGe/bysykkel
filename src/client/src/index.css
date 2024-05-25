@@ -4,6 +4,8 @@
   --main-background-color: #f5f5ec;
   --button-hover-outline-color: #646cff;
   --theme-accent-color: #005fc9;
+  --z-index-level-1: 10;
+  --z-index-level-2: 20;
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;

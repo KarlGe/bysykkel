@@ -1,5 +1,5 @@
 .mapOverlay {
-    z-index: 10;
+    z-index: var(--z-index-level-1);
     position: absolute;
     bottom: 0;
     background-color: var(--main-background-color);

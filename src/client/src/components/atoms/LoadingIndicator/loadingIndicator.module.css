@@ -1,0 +1,13 @@
+.loadingIndicator {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 5rem;
+    padding: 1rem;
+    width: fit-content;
+    margin: auto;
+    border-radius: 1rem;
+    z-index: var(--z-index-level-2);
+    color: var(--secondary-text-color);
+    background-color: var(--theme-accent-color);
+}

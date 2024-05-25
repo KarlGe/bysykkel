@@ -3,9 +3,11 @@ import StationMapMarker from "./StationMapMarker";
 import { MapContext, MapZoomDistance } from "../MapUtils";
 import { useContext, useEffect, useState } from "react";
 import { Station } from "@customTypes/station";
+import StationsError from "./StationsError";
+import LoadingIndicator from "@components/atoms/LoadingIndicator/LoadingIndicator";
 
 function MarkerContainer() {
-  const { stations } = useStations();
+  const { stations, error, isInitialLoad, loading } = useStations();
   const { map, setActiveStation } = useContext(MapContext);
   const [mapZoomDistance, setMapZoomDistance] = useState<
     MapZoomDistance | undefined
@@ -41,9 +43,9 @@ function MarkerContainer() {
       setActiveStation(stationData);
     }
   };
-
   return (
     <>
+      <LoadingIndicator isLoading={loading} />
       {stations?.map((stationData) => (
         <StationMapMarker
           mapZoomDistance={mapZoomDistance}
@@ -52,6 +54,7 @@ function MarkerContainer() {
           onClick={onMarkerClick}
         />
       ))}
+      <StationsError hasError={error} isInitialLoad={isInitialLoad} />
     </>
   );
 }

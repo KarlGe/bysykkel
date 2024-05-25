@@ -4,13 +4,19 @@ import DefaultButton from "@components/atoms/buttons/DefaultButton";
 
 type Props = {
   shouldOpen?: boolean;
-  onClose: () => void;
+  onClose?: () => void;
   children: React.ReactNode;
   title: string;
   startOpen?: boolean;
+  closeable?: boolean;
 };
 
-export default function BaseMapOverlay({ onClose, children, title }: Props) {
+export default function BaseMapOverlay({
+  onClose,
+  children,
+  title,
+  closeable = true,
+}: Props) {
   const [isOpen, setIsOpen] = useState(true);
 
   const onCloseClick = () => {
@@ -26,7 +32,7 @@ export default function BaseMapOverlay({ onClose, children, title }: Props) {
     <div className={classes.mapOverlay}>
       <h1>{title}</h1>
       {children}
-      <DefaultButton onClick={onCloseClick}>Lukk</DefaultButton>
+      {closeable && <DefaultButton onClick={onCloseClick}>Lukk</DefaultButton>}
     </div>
   );
 }
