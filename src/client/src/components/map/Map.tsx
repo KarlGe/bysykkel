@@ -4,16 +4,13 @@ import "maplibre-gl/dist/maplibre-gl.css";
 import { MapStyleUrl } from "@config";
 import { MapContext, MapContextValue, OsloCenter } from "./MapUtils";
 import classes from "./map.module.css";
-import BaseMapMarker from "./MapMarker/BaseMapMarker";
-import { useStations } from "src/hooks/useStations";
-import StationMapMarker from "./MapMarker/StationMapMarker";
+import MarkerContainer from "./MapMarker/MarkerContainer";
 
 function Map() {
   const [mapContextRef, setMapContextRef] = useState<MapContextValue>({
     map: null,
   });
   const mapContainer = useRef<HTMLDivElement>(null);
-  const { stations } = useStations();
 
   useEffect(() => {
     const map = new MapLibre({
@@ -30,15 +27,15 @@ function Map() {
       map.remove();
     };
   }, []);
+
   return (
     <MapContext.Provider value={mapContextRef}>
-      <div className={classes.mapContainer} key="map" ref={mapContainer}></div>
-      {stations?.map((stationData) => (
-        <StationMapMarker
-          stationData={stationData}
-          key={stationData.stationId}
-        />
-      ))}
+      <div
+        className={`${classes.mapContainer}`}
+        key="map"
+        ref={mapContainer}
+      ></div>
+      <MarkerContainer />
     </MapContext.Provider>
   );
 }

@@ -5,11 +5,10 @@ import mapLibreGl, {
   Map as MapLibre,
   Marker,
 } from "maplibre-gl";
-import { ReactNode, useContext, useEffect, useState } from "react";
+import { ReactNode, useContext, useMemo } from "react";
 import { MapContext } from "../MapUtils";
 
 type Props = {
-  className?: string;
   /**
    * Marker options
    */
@@ -23,18 +22,11 @@ type Props = {
   children?: ReactNode;
 };
 
-function BaseMapMarker({
-  children,
-  className,
-  lngLat,
-  markerOptions,
-  onClick,
-}: Props) {
+function BaseMapMarker({ children, lngLat, markerOptions, onClick }: Props) {
   const { map } = useContext(MapContext);
-  const [marker, setMarker] = useState<mapLibreGl.Marker | null>(null);
-  useEffect(() => {
+  const marker = useMemo(() => {
     if (!map) {
-      return;
+      return null;
     }
     const options = {
       ...(markerOptions || {}),
@@ -45,9 +37,6 @@ function BaseMapMarker({
       .addTo(map);
 
     const newMarkerElement = newMarker.getElement();
-    if (className) {
-      newMarkerElement.classList.add(className);
-    }
 
     const onMarkerClick = () => {
       if (onClick) {
@@ -58,16 +47,8 @@ function BaseMapMarker({
     if (onClick) {
       newMarkerElement.addEventListener("click", onMarkerClick);
     }
-
-    setMarker(newMarker);
-
-    return () => {
-      if (onClick) {
-        newMarkerElement.removeEventListener("click", onMarkerClick);
-      }
-      newMarker.remove();
-    };
-  }, [map, className, lngLat, markerOptions, onClick]);
+    return newMarker;
+  }, [map]);
 
   if (!marker) {
     return null;

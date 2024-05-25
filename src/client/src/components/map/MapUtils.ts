@@ -5,6 +5,8 @@ export type MapContextValue = {
   map: MapLibre | null;
 };
 
+export type MapZoomDistance = "zoom-close" | "zoom-distant";
+
 export const MapContext = React.createContext<MapContextValue>({ map: null });
 
 export const OsloCenter = [10.742376, 59.916456] as LngLatLike;
