@@ -2,10 +2,10 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "C#: BysykkelApi [Default Configuration]",
+            "name": "C#: BysykkelApi",
             "type": "dotnet",
             "request": "launch",
-            "projectPath": "${workspaceFolder}\\Bysykkel.API\\BysykkelApi.csproj"
+            "projectPath": "${workspaceFolder}\\Bysykkel.API\\Bysykkel.Api.csproj"
         }
     ]
 }
