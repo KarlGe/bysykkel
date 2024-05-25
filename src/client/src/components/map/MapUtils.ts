@@ -5,7 +5,7 @@ import React from "react";
 export type MapContextValue = {
   map: MapLibre | null;
   activeStation?: Station;
-  setActiveStation?: (stationData: Station) => void;
+  setActiveStation?: (stationData: Station | undefined) => void;
 };
 
 export type MapZoomDistance = "zoom-close" | "zoom-distant";
