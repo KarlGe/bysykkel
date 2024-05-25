@@ -23,16 +23,18 @@ public class BysykkelService : IBysykkelService
             var stationInfoData = GetStationInfoAsync();
             var stationStatusData = GetStationStatusAsync();
             await Task.WhenAll(stationInfoData, stationStatusData);
-            stations = MergeStationData(stationInfoData.Result, stationStatusData.Result);
-            _memoryCache.Set(CacheKeys.STATIONS, stations);
+            stations = MergeStationData(stationInfoData.Result.Data.Stations, stationStatusData.Result.Data.Stations);
+            var cacheExpiration = DateTimeOffset.Now.AddSeconds(stationInfoData.Result.Ttl);
+            _memoryCache.Set(CacheKeys.STATIONS, stations, cacheExpiration);
         }
         if (stations == null)
         {
             throw new Exception("Missing station data");
         }
+
         return stations;
     }
-    public async Task<IEnumerable<StationInfo>> GetStationInfoAsync()
+    public async Task<BysykkelResponse<StationInfoResponseData>> GetStationInfoAsync()
     {
         var responseInfo = await _httpClient.GetAsync("station_information.json");
         var data = await responseInfo.Content.ReadAsStringAsync();
@@ -41,9 +43,9 @@ public class BysykkelService : IBysykkelService
         {
             throw new Exception("Missing station info response from Bysykkel");
         }
-        return responseObj.Data.Stations;
+        return responseObj;
     }
-    public async Task<IEnumerable<StationStatus>> GetStationStatusAsync()
+    public async Task<BysykkelResponse<StationStatusResponseData>> GetStationStatusAsync()
     {
         var response = await _httpClient.GetAsync("station_status.json");
         var data = await response.Content.ReadAsStringAsync();
@@ -52,7 +54,7 @@ public class BysykkelService : IBysykkelService
         {
             throw new Exception("Missing station status response from Bysykkel");
         }
-        return responseObj.Data.Stations;
+        return responseObj;
     }
     IEnumerable<Station> MergeStationData(IEnumerable<StationInfo> statitionInfoList, IEnumerable<StationStatus> statitionStatusList)
     {
