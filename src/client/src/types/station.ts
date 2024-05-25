@@ -1,5 +1,6 @@
 export type VehicleType = {
-  vehicleTypeId: "bike";
+  // Currently this is only bike, but could be expanded with more vehicle types in the future
+  vehicleTypeId: "bike"; 
   count: number;
 };
 export type StationInfo = {

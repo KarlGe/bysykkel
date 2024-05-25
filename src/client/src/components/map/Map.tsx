@@ -2,14 +2,15 @@ import { useEffect, useRef, useState } from "react";
 import { Map as MapLibre } from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { MapStyleUrl } from "@config";
-import { MapContext, MapContextValue, OsloCenter } from "./MapUtils";
+import { MapContext, OsloCenter } from "./MapUtils";
 import classes from "./map.module.css";
 import MarkerContainer from "./MapMarker/MarkerContainer";
+import { Station } from "@customTypes/station";
+import MapOverlay from "./MapOverlay/MapOverlay";
 
 function Map() {
-  const [mapContextRef, setMapContextRef] = useState<MapContextValue>({
-    map: null,
-  });
+  const [mapRef, setMapRef] = useState<MapLibre | null>(null);
+  const [activeStation, setActiveStation] = useState<Station | undefined>();
   const mapContainer = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -20,22 +21,23 @@ function Map() {
       zoom: 12,
     });
 
-    setMapContextRef({
-      map,
-    });
+    setMapRef(map);
     return () => {
       map.remove();
     };
   }, []);
 
   return (
-    <MapContext.Provider value={mapContextRef}>
+    <MapContext.Provider
+      value={{ map: mapRef, activeStation, setActiveStation }}
+    >
       <div
         className={`${classes.mapContainer}`}
         key="map"
         ref={mapContainer}
       ></div>
       <MarkerContainer />
+      <MapOverlay />
     </MapContext.Provider>
   );
 }

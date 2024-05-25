@@ -2,10 +2,11 @@ import { useStations } from "src/hooks/useStations";
 import StationMapMarker from "./StationMapMarker";
 import { MapContext, MapZoomDistance } from "../MapUtils";
 import { useContext, useEffect, useState } from "react";
+import { Station } from "@customTypes/station";
 
 function MarkerContainer() {
   const { stations } = useStations();
-  const { map } = useContext(MapContext);
+  const { map, setActiveStation } = useContext(MapContext);
   const [mapZoomDistance, setMapZoomDistance] = useState<
     MapZoomDistance | undefined
   >("zoom-distant");
@@ -35,6 +36,12 @@ function MarkerContainer() {
     return null;
   }
 
+  const onMarkerClick = (stationData: Station) => {
+    if (setActiveStation) {
+      setActiveStation(stationData);
+    }
+  };
+
   return (
     <>
       {stations?.map((stationData) => (
@@ -42,6 +49,7 @@ function MarkerContainer() {
           mapZoomDistance={mapZoomDistance}
           stationData={stationData}
           key={stationData.info.stationId}
+          onClick={onMarkerClick}
         />
       ))}
     </>

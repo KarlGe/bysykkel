@@ -6,6 +6,7 @@
     align-items: center;
 
     button {
+        color: var(--secondary-text-color);
         background-color: var(--theme-accent-color);
         padding: 0;
         width: var(--button-size);
@@ -13,6 +14,16 @@
         border-radius: 50%;
         font-size: var(--marker-font-size);
         line-height: var(--marker-font-size);
+        &:focus-visible,
+        &:hover {
+            --button-size: 2em;
+            :global(.stationMarker__availability) {
+                display: block;
+            }
+        }
+        &:focus-visible {
+            outline: 2px solid red;
+        }
     }
     &:global(.zoom-close) {
         button {
